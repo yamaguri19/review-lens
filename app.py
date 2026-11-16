@@ -163,6 +163,7 @@ def process_outbound_click():
     st.stop()
 
 
+
 def search_yahoo(keyword: str, limit: int = 10) -> tuple[list[dict], str | None]:
     app_id = get_secret("YAHOO_APP_ID")
     vc_affiliate_id = get_secret("YAHOO_VC_AFFILIATE_ID")
@@ -170,19 +171,19 @@ def search_yahoo(keyword: str, limit: int = 10) -> tuple[list[dict], str | None]
     if not app_id:
         return [], "YAHOO_APP_ID が未設定です。設定を確認してください。"
 
-    if not vc_affiliate_id:
-        return [], "YAHOO_VC_AFFILIATE_ID が未設定です。購入リンク連携の設定を確認してください。"
-
     params = {
         "appid": app_id,
         "query": keyword,
         "results": min(max(limit, 1), 50),
         "sort": "-review_count",
         "condition": "new",
-        "affiliate_type": "vc",
-        "affiliate_id": vc_affiliate_id,
         "image_size": 300,
     }
+
+    # アフィリエイトIDが設定されている場合だけ付加する
+    if vc_affiliate_id:
+        params["affiliate_type"] = "vc"
+        params["affiliate_id"] = vc_affiliate_id
 
     try:
         response = requests.get(YAHOO_URL, params=params, timeout=20)
@@ -194,7 +195,7 @@ def search_yahoo(keyword: str, limit: int = 10) -> tuple[list[dict], str | None]
         for item in hits:
             review = item.get("review") or {}
             image = item.get("image") or {}
-            affiliate_url = item.get("url", "")
+            product_url = item.get("url", "")
 
             normalized.append({
                 "site": "Yahoo!ショッピング",
@@ -202,7 +203,7 @@ def search_yahoo(keyword: str, limit: int = 10) -> tuple[list[dict], str | None]
                 "price": safe_int(item.get("price")),
                 "rating": review.get("rate"),
                 "review_count": safe_int(review.get("count")),
-                "url": affiliate_url if valid_affiliate_url(affiliate_url) else "",
+                "url": product_url if valid_affiliate_url(product_url) else "",
                 "image": image.get("medium", ""),
                 "shop": (item.get("seller") or {}).get("name", ""),
             })
@@ -213,7 +214,6 @@ def search_yahoo(keyword: str, limit: int = 10) -> tuple[list[dict], str | None]
         return [], f"Yahoo!ショッピングAPIへの接続に失敗しました: {exc}"
     except (ValueError, TypeError) as exc:
         return [], f"Yahoo!ショッピングAPIの応答を読み取れませんでした: {exc}"
-
 
 def split_reviews(raw: str) -> list[str]:
     chunks = re.split(r"(?:\r?\n){1,}|(?<=[。！？!?])\s*", raw)
