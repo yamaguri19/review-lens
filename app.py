@@ -628,6 +628,15 @@ with tab_about:
         use_container_width=True
     )
     st.markdown("---")
+    st.markdown("---")
+
+    st.markdown("### 運営者情報")
+
+    st.write("**サービス名：** Review Lens")
+    st.write("**運営者：** Review Lens運営者")
+    st.write("**お問い合わせ：** 上記のお問い合わせフォームをご利用ください。")
+    st.write("**サービス内容：** 商品情報やレビューの整理・分析を通じて、購入判断を支援するWebサービス")
+
     st.markdown("### 🔒 プライバシーポリシー")
 
     with st.expander("プライバシーポリシーを読む"):
