@@ -616,6 +616,7 @@ with tab_about:
     st.write("- サクラレビューの確定判定")
     st.write("- 購入・成果報酬の確定")
 
+    st.markdown("---")
     st.markdown("### お問い合わせ")
 
     st.write(
@@ -627,9 +628,8 @@ with tab_about:
         "https://forms.gle/a6WHym1MkqJCoVqz8",
         use_container_width=True
     )
-    st.markdown("---")
-    st.markdown("---")
 
+    st.markdown("---")
     st.markdown("### 運営者情報")
 
     st.write("**サービス名：** Review Lens")
@@ -637,6 +637,7 @@ with tab_about:
     st.write("**お問い合わせ：** 上記のお問い合わせフォームをご利用ください。")
     st.write("**サービス内容：** 商品情報やレビューの整理・分析を通じて、購入判断を支援するWebサービス")
 
+    st.markdown("---")
     st.markdown("### 🔒 プライバシーポリシー")
 
     with st.expander("プライバシーポリシーを読む"):
