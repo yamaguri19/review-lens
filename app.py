@@ -616,6 +616,17 @@ with tab_about:
     st.write("- サクラレビューの確定判定")
     st.write("- 購入・成果報酬の確定")
 
+    st.markdown("### お問い合わせ")
+    st.write(
+        "Review Lensへのご質問・ご意見・不具合のご報告は、"
+        "以下のお問い合わせフォームからお送りください。"
+    )
+    st.link_button(
+        "お問い合わせフォームを開く",
+        "https://forms.gle/a6WHym1MkqJCoVqz8",
+        use_container_width=True
+    )
+
     st.caption(
         "広告・アフィリエイトリンクを含む場合があります。商品価格・在庫・掲載内容は販売サイトでご確認ください。"
     )
