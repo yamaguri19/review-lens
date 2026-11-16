@@ -153,13 +153,12 @@ def process_outbound_click():
         destination = row["destination_url"]
 
     st.title("購入先へ移動しています")
-    st.write(f"{row['product_name']} の販売ページを開いています。")
-    components.html(
-        "<script>window.top.location.href = "
-        + json.dumps(destination) + ";</script>",
-        height=0,
+    st.write(f"{row['product_name']} の販売ページです。")
+    st.link_button(
+        "Yahoo!ショッピングの商品ページを開く",
+        destination,
+        use_container_width=True,
     )
-    st.markdown(f"[自動で移動しない場合はこちら]({destination})")
     st.stop()
 
 
